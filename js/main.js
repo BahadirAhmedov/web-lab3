@@ -1,0 +1,6 @@
+const view = new View(
+  document.getElementById('board-grid'),
+  document.getElementById('board-tiles')
+);
+
+view.buildGrid();
