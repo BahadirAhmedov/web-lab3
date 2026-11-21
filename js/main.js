@@ -5,3 +5,5 @@ const view = new View(
 );
 
 view.buildGrid();
+
+view.render(game.grid);
