@@ -80,8 +80,12 @@ class Game {
   getLineCells(direction, index) {
     const cells = [];
     for (let i = 0; i < SIZE; i++) {
-      const col = direction === 'right' ? SIZE - 1 - i : i;
-      cells.push({ row: index, col });
+      const position = direction === 'right' ? SIZE - 1 - i : i;
+      if (direction === 'up') {
+        cells.push({ row: position, col: index });
+      } else {
+        cells.push({ row: index, col: position });
+      }
     }
     return cells;
   }

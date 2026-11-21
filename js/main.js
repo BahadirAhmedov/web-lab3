@@ -7,6 +7,7 @@ const view = new View(
 const KEY_DIRECTIONS = {
   ArrowLeft: 'left',
   ArrowRight: 'right',
+  ArrowUp: 'up',
 };
 
 function update() {
