@@ -8,6 +8,7 @@ const KEY_DIRECTIONS = {
   ArrowLeft: 'left',
   ArrowRight: 'right',
   ArrowUp: 'up',
+  ArrowDown: 'down',
 };
 
 function update() {
