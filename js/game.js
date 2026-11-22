@@ -45,6 +45,7 @@ class Game {
   reset() {
     this.grid = this.createEmptyGrid();
     this.score = 0;
+    this.over = false;
     this.addRandomTiles(randomInt(1, 3));
   }
 
@@ -94,6 +95,8 @@ class Game {
   }
 
   move(direction) {
+    if (this.over) return false;
+
     const newGrid = this.createEmptyGrid();
     let moved = false;
     let points = 0;
@@ -133,6 +136,21 @@ class Game {
     this.grid = newGrid;
     this.score += points;
     this.addRandomTiles(randomInt(1, 2));
+    this.over = !this.canMove();
     return true;
+  }
+
+  // Ход возможен, если есть пустая клетка или соседние плитки с одинаковым значением
+  canMove() {
+    if (this.getEmptyCells().length) return true;
+
+    for (let row = 0; row < SIZE; row++) {
+      for (let col = 0; col < SIZE; col++) {
+        const value = this.grid[row][col].value;
+        if (col + 1 < SIZE && this.grid[row][col + 1].value === value) return true;
+        if (row + 1 < SIZE && this.grid[row + 1][col].value === value) return true;
+      }
+    }
+    return false;
   }
 }
