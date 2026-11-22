@@ -4,6 +4,8 @@ const view = new View(
   document.getElementById('board-tiles')
 );
 
+const scoreEl = document.getElementById('score');
+
 const KEY_DIRECTIONS = {
   ArrowLeft: 'left',
   ArrowRight: 'right',
@@ -13,6 +15,7 @@ const KEY_DIRECTIONS = {
 
 function update() {
   view.render(game.grid);
+  scoreEl.textContent = game.score;
 }
 
 function handleMove(direction) {

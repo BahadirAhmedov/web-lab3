@@ -6,6 +6,7 @@ function randomInt(min, max) {
 // пока слияния возможны: [4, 4, 4, 4] -> [16], [16, 16, 2, 2] -> [32, 4]
 function mergeLine(tiles) {
   let items = tiles.filter(Boolean).map((tile) => ({ value: tile.value, sources: [tile] }));
+  let points = 0;
   let merged = true;
 
   while (merged) {
@@ -20,6 +21,7 @@ function mergeLine(tiles) {
           value: last.value * 2,
           sources: last.sources.concat(item.sources),
         };
+        points += last.value * 2;
         lastMerged = true;
         merged = true;
       } else {
@@ -31,7 +33,7 @@ function mergeLine(tiles) {
     items = result;
   }
 
-  return { items };
+  return { items, points };
 }
 
 class Game {
@@ -94,12 +96,14 @@ class Game {
   move(direction) {
     const newGrid = this.createEmptyGrid();
     let moved = false;
+    let points = 0;
 
     for (let index = 0; index < SIZE; index++) {
       const cells = this.getLineCells(direction, index);
-      const { items } = mergeLine(cells.map(({ row, col }) => this.grid[row][col]));
+      const line = mergeLine(cells.map(({ row, col }) => this.grid[row][col]));
+      points += line.points;
 
-      items.forEach((item, i) => {
+      line.items.forEach((item, i) => {
         const { row, col } = cells[i];
         let tile;
 
@@ -127,6 +131,7 @@ class Game {
     if (!moved) return false;
 
     this.grid = newGrid;
+    this.score += points;
     return true;
   }
 }
