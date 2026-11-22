@@ -132,6 +132,7 @@ class Game {
 
     this.grid = newGrid;
     this.score += points;
+    this.addRandomTiles(randomInt(1, 2));
     return true;
   }
 }
