@@ -5,6 +5,7 @@ const view = new View(
 );
 
 const scoreEl = document.getElementById('score');
+const undoBtn = document.getElementById('undo-btn');
 const restartBtn = document.getElementById('restart-btn');
 const gameOverModal = document.getElementById('game-over-modal');
 const gameOverMessage = document.getElementById('game-over-message');
@@ -41,6 +42,7 @@ function closeModal(modal) {
 function update() {
   view.render(game.grid);
   scoreEl.textContent = game.score;
+  undoBtn.disabled = !game.canUndo();
   if (game.over) showGameOver();
 }
 
@@ -100,6 +102,10 @@ document.addEventListener('keydown', (event) => {
 
   event.preventDefault();
   handleMove(direction);
+});
+
+undoBtn.addEventListener('click', () => {
+  if (game.undo()) update();
 });
 
 restartBtn.addEventListener('click', restart);

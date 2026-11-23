@@ -47,6 +47,7 @@ class Game {
     this.score = 0;
     this.over = false;
     this.recordSaved = false;
+    this.history = [];
     this.addRandomTiles(randomInt(1, 3));
   }
 
@@ -98,6 +99,7 @@ class Game {
   move(direction) {
     if (this.over) return false;
 
+    const snapshot = this.getSnapshot();
     const newGrid = this.createEmptyGrid();
     let moved = false;
     let points = 0;
@@ -136,6 +138,7 @@ class Game {
 
     this.grid = newGrid;
     this.score += points;
+    this.history.push(snapshot);
     this.addRandomTiles(randomInt(1, 2));
     this.over = !this.canMove();
     return true;
@@ -153,5 +156,30 @@ class Game {
       }
     }
     return false;
+  }
+
+  getSnapshot() {
+    return {
+      cells: this.grid.map((row) => row.map((tile) => (tile ? tile.value : 0))),
+      score: this.score,
+    };
+  }
+
+  applySnapshot(snapshot) {
+    this.grid = snapshot.cells.map((row, r) =>
+      row.map((value, c) => (value ? this.createTile(value, r, c) : null))
+    );
+    this.score = snapshot.score;
+  }
+
+  // После окончания игры отменить ход нельзя
+  canUndo() {
+    return !this.over && this.history.length > 0;
+  }
+
+  undo() {
+    if (!this.canUndo()) return false;
+    this.applySnapshot(this.history.pop());
+    return true;
   }
 }
