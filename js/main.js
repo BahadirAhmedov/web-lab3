@@ -5,10 +5,12 @@ const view = new View(
 );
 
 const scoreEl = document.getElementById('score');
+const restartBtn = document.getElementById('restart-btn');
 const gameOverModal = document.getElementById('game-over-modal');
 const gameOverMessage = document.getElementById('game-over-message');
 const saveForm = document.getElementById('save-form');
 const playerNameInput = document.getElementById('player-name');
+const modalRestartBtn = document.getElementById('modal-restart-btn');
 const leadersBtn = document.getElementById('leaders-btn');
 const leadersModal = document.getElementById('leaders-modal');
 const leadersBody = document.getElementById('leaders-body');
@@ -59,6 +61,12 @@ function handleMove(direction) {
   if (game.move(direction)) update();
 }
 
+function restart() {
+  game.reset();
+  closeModal(gameOverModal);
+  update();
+}
+
 function formatDate(isoDate) {
   return new Date(isoDate).toLocaleString('ru-RU', {
     day: '2-digit',
@@ -93,6 +101,9 @@ document.addEventListener('keydown', (event) => {
   event.preventDefault();
   handleMove(direction);
 });
+
+restartBtn.addEventListener('click', restart);
+modalRestartBtn.addEventListener('click', restart);
 
 saveForm.addEventListener('submit', (event) => {
   event.preventDefault();
