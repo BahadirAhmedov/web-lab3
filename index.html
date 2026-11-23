@@ -16,13 +16,36 @@
       </div>
     </header>
 
+    <div class="toolbar">
+      <button class="btn" id="leaders-btn" type="button">Лидеры</button>
+    </div>
+
     <div class="board" id="board">
       <div class="board__grid" id="board-grid"></div>
       <div class="board__tiles" id="board-tiles"></div>
     </div>
   </main>
 
+  <div class="modal" id="leaders-modal" hidden>
+    <div class="modal__content">
+      <h2 class="modal__title">Таблица лидеров</h2>
+      <table class="leaders">
+        <thead>
+          <tr>
+            <th>Имя</th>
+            <th>Очки</th>
+            <th>Дата</th>
+          </tr>
+        </thead>
+        <tbody id="leaders-body"></tbody>
+      </table>
+      <p class="leaders__empty" id="leaders-empty" hidden>Рекордов пока нет</p>
+      <button class="btn" id="leaders-close-btn" type="button">Закрыть</button>
+    </div>
+  </div>
+
   <script src="js/config.js"></script>
+  <script src="js/storage.js"></script>
   <script src="js/game.js"></script>
   <script src="js/view.js"></script>
   <script src="js/main.js"></script>
