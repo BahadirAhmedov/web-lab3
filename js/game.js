@@ -46,6 +46,7 @@ class Game {
     this.grid = this.createEmptyGrid();
     this.score = 0;
     this.over = false;
+    this.recordSaved = false;
     this.addRandomTiles(randomInt(1, 3));
   }
 

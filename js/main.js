@@ -5,6 +5,10 @@ const view = new View(
 );
 
 const scoreEl = document.getElementById('score');
+const gameOverModal = document.getElementById('game-over-modal');
+const gameOverMessage = document.getElementById('game-over-message');
+const saveForm = document.getElementById('save-form');
+const playerNameInput = document.getElementById('player-name');
 const leadersBtn = document.getElementById('leaders-btn');
 const leadersModal = document.getElementById('leaders-modal');
 const leadersBody = document.getElementById('leaders-body');
@@ -19,7 +23,7 @@ const KEY_DIRECTIONS = {
 };
 
 function isModalOpen() {
-  return !leadersModal.hidden;
+  return !gameOverModal.hidden || !leadersModal.hidden;
 }
 
 function openModal(modal) {
@@ -35,6 +39,19 @@ function closeModal(modal) {
 function update() {
   view.render(game.grid);
   scoreEl.textContent = game.score;
+  if (game.over) showGameOver();
+}
+
+function showGameOver() {
+  if (game.recordSaved) {
+    gameOverMessage.textContent = 'Ваш рекорд сохранен';
+    saveForm.hidden = true;
+  } else {
+    gameOverMessage.textContent = `Ходов больше нет. Ваш счёт: ${game.score}`;
+    saveForm.hidden = false;
+    playerNameInput.value = '';
+  }
+  openModal(gameOverModal);
 }
 
 function handleMove(direction) {
@@ -75,6 +92,17 @@ document.addEventListener('keydown', (event) => {
 
   event.preventDefault();
   handleMove(direction);
+});
+
+saveForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const name = playerNameInput.value.trim();
+  if (!name) return;
+
+  GameStorage.addLeader({ name, score: game.score, date: new Date().toISOString() });
+  game.recordSaved = true;
+  saveForm.hidden = true;
+  gameOverMessage.textContent = 'Ваш рекорд сохранен';
 });
 
 leadersBtn.addEventListener('click', () => {

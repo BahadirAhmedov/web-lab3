@@ -235,3 +235,34 @@ body {
 .leaders__empty {
   margin: 0 0 16px;
 }
+
+.modal__message {
+  margin: 0 0 16px;
+  font-size: 18px;
+}
+
+.save-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.save-form[hidden] {
+  display: none;
+}
+
+.save-form__input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 2px solid var(--board-bg);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+.save-form__input:focus {
+  outline: none;
+  border-color: var(--btn-bg);
+}
