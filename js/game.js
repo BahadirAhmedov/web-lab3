@@ -182,4 +182,23 @@ class Game {
     this.applySnapshot(this.history.pop());
     return true;
   }
+
+  serialize() {
+    return {
+      ...this.getSnapshot(),
+      over: this.over,
+      recordSaved: this.recordSaved,
+      history: this.history,
+    };
+  }
+
+  load(state) {
+    if (!state || !Array.isArray(state.cells) || state.cells.length !== SIZE) return false;
+
+    this.applySnapshot(state);
+    this.over = Boolean(state.over);
+    this.recordSaved = Boolean(state.recordSaved);
+    this.history = Array.isArray(state.history) ? state.history : [];
+    return true;
+  }
 }

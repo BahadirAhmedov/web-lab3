@@ -43,6 +43,7 @@ function update() {
   view.render(game.grid);
   scoreEl.textContent = game.score;
   undoBtn.disabled = !game.canUndo();
+  GameStorage.saveGame(game.serialize());
   if (game.over) showGameOver();
 }
 
@@ -118,6 +119,7 @@ saveForm.addEventListener('submit', (event) => {
 
   GameStorage.addLeader({ name, score: game.score, date: new Date().toISOString() });
   game.recordSaved = true;
+  GameStorage.saveGame(game.serialize());
   saveForm.hidden = true;
   gameOverMessage.textContent = 'Ваш рекорд сохранен';
 });
@@ -130,4 +132,5 @@ leadersBtn.addEventListener('click', () => {
 leadersCloseBtn.addEventListener('click', () => closeModal(leadersModal));
 
 view.buildGrid();
+game.load(GameStorage.loadGame());
 update();

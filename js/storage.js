@@ -1,3 +1,4 @@
+const GAME_KEY = 'game2048-state';
 const LEADERS_KEY = 'game2048-leaders';
 const LEADERS_LIMIT = 10;
 
@@ -17,6 +18,14 @@ const GameStorage = {
     } catch {
       // localStorage недоступен — продолжаем без сохранения
     }
+  },
+
+  loadGame() {
+    return this.read(GAME_KEY, null);
+  },
+
+  saveGame(state) {
+    this.write(GAME_KEY, state);
   },
 
   getLeaders() {
