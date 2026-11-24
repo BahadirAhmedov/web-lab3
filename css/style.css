@@ -306,3 +306,82 @@ body {
   outline: none;
   border-color: var(--btn-bg);
 }
+
+.controls {
+  display: none;
+}
+
+.controls__btn {
+  height: 64px;
+  border: none;
+  border-radius: 8px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-size: 24px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.controls__btn:active {
+  background: var(--btn-bg-hover);
+}
+
+.controls__btn--up { grid-area: up; }
+.controls__btn--left { grid-area: left; }
+.controls__btn--down { grid-area: down; }
+.controls__btn--right { grid-area: right; }
+
+/* Планшеты и смартфоны: показываем виртуальные кнопки управления */
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  .controls {
+    display: grid;
+    grid-template-columns: repeat(3, 72px);
+    grid-template-areas:
+      ". up ."
+      "left down right";
+    gap: 8px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  /* На время просмотра рекордов и сохранения результата кнопки скрыты */
+  body.modal-open .controls {
+    display: none;
+  }
+}
+
+/* Смартфоны */
+@media (max-width: 520px) {
+  :root {
+    --board-size: calc(100vw - 32px);
+    --gap: 10px;
+  }
+
+  .app {
+    padding: 16px 0;
+  }
+
+  .title {
+    font-size: 48px;
+  }
+
+  .score {
+    min-width: 80px;
+    padding: 6px 14px;
+  }
+
+  .toolbar .btn {
+    padding: 10px 8px;
+    font-size: 14px;
+  }
+
+  .save-form {
+    flex-direction: column;
+  }
+
+  .leaders th,
+  .leaders td {
+    padding: 6px 4px;
+    font-size: 14px;
+  }
+}

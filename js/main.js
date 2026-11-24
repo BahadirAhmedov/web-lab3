@@ -4,6 +4,7 @@ const view = new View(
   document.getElementById('board-tiles')
 );
 
+const controls = document.getElementById('controls');
 const scoreEl = document.getElementById('score');
 const undoBtn = document.getElementById('undo-btn');
 const restartBtn = document.getElementById('restart-btn');
@@ -108,6 +109,11 @@ document.addEventListener('keydown', (event) => {
 
   event.preventDefault();
   handleMove(direction);
+});
+
+controls.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-direction]');
+  if (button) handleMove(button.dataset.direction);
 });
 
 undoBtn.addEventListener('click', () => {
