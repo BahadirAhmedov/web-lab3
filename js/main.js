@@ -39,12 +39,17 @@ function closeModal(modal) {
   if (!isModalOpen()) document.body.classList.remove('modal-open');
 }
 
-function update() {
-  view.render(game.grid);
+function update(animate = false) {
+  view.render(game.grid, animate);
   scoreEl.textContent = game.score;
   undoBtn.disabled = !game.canUndo();
   GameStorage.saveGame(game.serialize());
-  if (game.over) showGameOver();
+  if (game.over) {
+    // даём анимации последнего хода завершиться перед показом окна
+    setTimeout(() => {
+      if (game.over) showGameOver();
+    }, animate ? MOVE_DURATION * 3 : 0);
+  }
 }
 
 function showGameOver() {
@@ -61,7 +66,7 @@ function showGameOver() {
 
 function handleMove(direction) {
   if (isModalOpen()) return;
-  if (game.move(direction)) update();
+  if (game.move(direction)) update(true);
 }
 
 function restart() {
